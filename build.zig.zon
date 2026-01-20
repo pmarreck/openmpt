@@ -1,0 +1,19 @@
+.{
+    .name = .libopenmpt,
+    .version = "0.8.0",
+    .fingerprint = 0x8ef0c1d158d08ce6,
+    .minimum_zig_version = "0.14.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "common",
+        "include",
+        "libopenmpt",
+        "sounddsp",
+        "soundlib",
+        "src",
+        "unarchiver",
+        "LICENSE",
+    },
+}

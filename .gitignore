@@ -964,3 +964,6 @@
 /test/test.saved.xm
 /unarchiver/*.d
 /unarchiver/*.o
+.DS_Store
+.zig-cache/
+zig-out/
