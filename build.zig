@@ -236,33 +236,33 @@ pub fn build(b: *std.Build) void {
     };
 
     // Add C++ sources
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = common_sources,
         .flags = cxxflags,
     });
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = sounddsp_sources,
         .flags = cxxflags,
     });
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = soundlib_sources,
         .flags = cxxflags,
     });
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = soundlib_plugin_sources,
         .flags = cxxflags,
     });
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = unarchiver_sources,
         .flags = cxxflags,
     });
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = libopenmpt_sources,
         .flags = cxxflags,
     });
 
     // Add bundled C sources
-    lib.addCSourceFiles(.{
+    lib.root_module.addCSourceFiles(.{
         .files = bundled_c_sources,
         .flags = cflags,
     });
@@ -290,11 +290,11 @@ pub fn build(b: *std.Build) void {
         }),
     });
 
-    test_exe.addCSourceFiles(.{
+    test_exe.root_module.addCSourceFiles(.{
         .files = &.{"test_build.c"},
         .flags = &.{},
     });
-    test_exe.linkLibrary(lib);
+    test_exe.root_module.linkLibrary(lib);
 
     const run_test = b.addRunArtifact(test_exe);
     const test_step = b.step("test", "Run libopenmpt build verification test");
