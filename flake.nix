@@ -3,9 +3,13 @@
 
 	inputs = {
 		nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+		zig-overlay = {
+			url = "github:mitchellh/zig-overlay";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = { self, nixpkgs }:
+	outputs = { self, nixpkgs, zig-overlay }:
 		let
 			systems = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
 			forAllSystems = nixpkgs.lib.genAttrs systems;
@@ -13,11 +17,12 @@
 			devShells = forAllSystems (system:
 				let
 					pkgs = import nixpkgs { inherit system; };
+					zig = zig-overlay.packages.${system}."0.16.0";
 				in {
 					default = pkgs.mkShell {
-						packages = with pkgs; [
+						packages = [
 							zig
-							git
+							pkgs.git
 						];
 						shellHook = ''
 							echo "libopenmpt development shell"
