@@ -10,6 +10,14 @@ pub fn build(b: *std.Build) void {
         .root_module = b.createModule(.{
             .target = target,
             .optimize = optimize,
+            // Zig's bundled libc++ (<array> -> <cwchar> -> <wchar.h>) pulls in
+            // libc headers like <bits/alltypes.h>. Those are provided by the
+            // libc Zig ships only when `link_libc = true` is set. Without it,
+            // builds on Linux fail with "'bits/alltypes.h' file not found".
+            // macOS pulls those headers from the Apple SDK so it survives
+            // without this flag, but for portable Linux/macOS parity we set
+            // it unconditionally.
+            .link_libc = true,
             .link_libcpp = true,
         }),
     });
