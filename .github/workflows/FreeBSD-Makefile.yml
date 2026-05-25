@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
     - name: Startup VM
       uses: cross-platform-actions/action@v0.32.0
       with:
